@@ -53,19 +53,18 @@ class snake():
 
 def display_text(msg, color, x, y):
     
-    font = pygame.font.Font(None,25)
+    font = pygame.font.SysFont('verdana',25)
     text = font.render(msg, True, color)
     gameDisplay.blit(text, [x,y])
 
 def pause():
-    pause = True
-    while pause:
+    paused = True
+    while paused:
         for event in pygame.event.get():
-            if event.type == pygame.K_p:
-                pause = False
-                break
-
-
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                    paused = False
+                    break    
 def gameLoop(tail):
     score = 0
     difficulty = 0.09
@@ -82,6 +81,7 @@ def gameLoop(tail):
 
     while True:
         movement_done = True
+        paused = False
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -90,6 +90,9 @@ def gameLoop(tail):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
                     pause()
+                if event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
                 if event.key == pygame.K_LEFT and not right and movement_done:
                     left = True
                     right = False
@@ -133,7 +136,7 @@ def gameLoop(tail):
         if head.x == food.x and head.y == food.y:
             player.grow(tail)
             score += 10
-            if score % 50 == 0:
+            if score % 50 == 0 and difficulty != 0:
                 difficulty -= 0.01
 
         gameDisplay.fill(black)
@@ -142,7 +145,9 @@ def gameLoop(tail):
 
         display_text('Score:', white, 830, 20)
         display_text(str(score), white, 950,20)
-        display_text(str(difficulty), white, 950, 50)
+        display_text('P to pause', white, 830, 300)
+        display_text('Q to exit', white, 830, 330)
+
         food.draw()
         head.draw()
         j = 0 
@@ -173,4 +178,3 @@ food_y = random.randrange(0,screen_heigth,20)
 food = segment(food_x, food_y, white)
 
 gameLoop(tail)
-
