@@ -1,4 +1,4 @@
-import pygame, time, random
+import pygame, time, random, os
 
 pygame.init()
 
@@ -66,6 +66,7 @@ def pause():
                     paused = False
                     break    
 def gameLoop(tail):
+    global highscore
     score = 0
     difficulty = 0.09
     xs = []
@@ -138,13 +139,20 @@ def gameLoop(tail):
             score += 10
             if score % 50 == 0 and difficulty != 0:
                 difficulty -= 0.01
+            if score > int(highscore):
+                f.seek(0)
+                f.write(str(score))
+                f.seek(0)
+                highscore = f.read()
 
         gameDisplay.fill(black)
-        
+
         pygame.draw.rect(gameDisplay, white, [0,0,800,600],1)
 
         display_text('Score:', white, 830, 20)
         display_text(str(score), white, 950,20)
+        display_text('Highscore:', white, 830, 50)
+        display_text(highscore, white, 950, 50)
         display_text('P to pause', white, 830, 300)
         display_text('Q to exit', white, 830, 330)
 
@@ -177,4 +185,13 @@ food_x = random.randrange(0,screen_width,20)
 food_y = random.randrange(0,screen_heigth,20)
 food = segment(food_x, food_y, white)
 
+try:
+    f = open('highscore.txt', 'r+')
+except:
+    f = open('highscore.txt', 'w+')
+    f.write('1')
+
+f.seek(0)
+highscore = f.read()
 gameLoop(tail)
+f.close()
