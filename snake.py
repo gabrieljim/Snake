@@ -128,22 +128,22 @@ def gameLoop(tail):
                 if event.key == pygame.K_q:
                     pygame.quit()
                     quit()
-                if event.key == pygame.K_LEFT and not right and movement_done:
+                if (event.key == pygame.K_LEFT or event.key == pygame.K_a) and not right and movement_done:
                     left = True
                     right = False
                     up = False
                     down = False
-                if event.key == pygame.K_RIGHT and not left and movement_done:
+                if (event.key == pygame.K_RIGHT or event.key == pygame.K_d) and not left and movement_done:
                     right = True
                     left = False
                     down = False
                     up = False
-                if event.key == pygame.K_UP and not down and movement_done:
+                if (event.key == pygame.K_UP or event.key == pygame.K_w) and not down and movement_done:
                     up = True
                     down = False
                     right = False
                     left = False
-                if event.key == pygame.K_DOWN and not up and movement_done:
+                if (event.key == pygame.K_DOWN or event.key == pygame.K_s) and not up and movement_done:
                     down = True
                     up = False
                     right = False
@@ -183,9 +183,9 @@ def gameLoop(tail):
 
         pygame.draw.rect(gameDisplay, white, [0,0,800,600],1)
 
-        display_text('Score:', white, 830, 20,25)
+        display_text('Score:', white, 815, 20,25)
         display_text(str(score), white, 950,20,25)
-        display_text('Highscore:', white, 830, 50,25)
+        display_text('Highscore:', white, 815, 50,25)
         display_text(highscore, white, 950, 50,25)
         display_text('P to pause', white, 830, 300,25)
         display_text('Q to exit', white, 830, 330,25)
