@@ -61,10 +61,38 @@ def pause():
     paused = True
     while paused:
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
                 if event.key == pygame.K_p:
                     paused = False
                     break    
+
+def intro(screen_width, screen_heigth):
+    gameDisplay.fill(black)
+    display_text('Welcome to Snake!', white, screen_width/2, screen_heigth/2-100)
+    display_text('Press Enter to start', white, screen_width/2, screen_heigth/2)
+    display_text('Press Q to quit', white, screen_width/2+25, screen_heigth/2+50)
+    pygame.display.update()
+    begin = False
+    while not begin:
+        for event in pygame.event.get():
+
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+                if event.key == pygame.K_RETURN:
+                    begin = True
+                    break    
+
 def gameLoop(tail):
     global highscore
     score = 0
@@ -196,5 +224,6 @@ except:
 
 f.seek(0)
 highscore = f.read()
+intro(screen_width, screen_heigth)
 gameLoop(tail)
 f.close()
