@@ -80,6 +80,9 @@ def gameLoop(tail):
     up = False
     down = False
 
+    food.x = random.randrange(0,screen_width,20)
+    food.y = random.randrange(0,screen_heigth,20)
+
     while True:
         movement_done = True
         paused = False
@@ -137,7 +140,7 @@ def gameLoop(tail):
         if head.x == food.x and head.y == food.y:
             player.grow(tail)
             score += 10
-            if score % 50 == 0 and difficulty != 0:
+            if score % 50 == 0 and difficulty > 0.01:
                 difficulty -= 0.01
             if score > int(highscore):
                 f.seek(0)
