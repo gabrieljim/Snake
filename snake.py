@@ -51,14 +51,17 @@ class snake():
         food.y = random.randrange(0,screen_heigth,20)
 
 
-def display_text(msg, color, x, y):
+def display_text(msg, color, x, y, size):
     
-    font = pygame.font.SysFont('verdana',25)
+    font = pygame.font.SysFont('verdana',size)
     text = font.render(msg, True, color)
     gameDisplay.blit(text, [x,y])
 
 def pause():
     paused = True
+    pygame.draw.rect(gameDisplay, black, [screen_width/2 - 150, screen_heigth/2 - 200, 300, 100])
+    display_text('Paused', white, 300,100,65)
+    pygame.display.update()
     while paused:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -74,9 +77,9 @@ def pause():
 
 def intro(screen_width, screen_heigth):
     gameDisplay.fill(black)
-    display_text('Welcome to Snake!', white, screen_width/2, screen_heigth/2-100)
-    display_text('Press Enter to start', white, screen_width/2, screen_heigth/2)
-    display_text('Press Q to quit', white, screen_width/2+25, screen_heigth/2+50)
+    display_text('Welcome to Snake!', white, screen_width/2, screen_heigth/2-100,25)
+    display_text('Press Enter to start', white, screen_width/2, screen_heigth/2,25)
+    display_text('Press Q to quit', white, screen_width/2+25, screen_heigth/2+50,25)
     pygame.display.update()
     begin = False
     while not begin:
@@ -180,12 +183,12 @@ def gameLoop(tail):
 
         pygame.draw.rect(gameDisplay, white, [0,0,800,600],1)
 
-        display_text('Score:', white, 830, 20)
-        display_text(str(score), white, 950,20)
-        display_text('Highscore:', white, 830, 50)
-        display_text(highscore, white, 950, 50)
-        display_text('P to pause', white, 830, 300)
-        display_text('Q to exit', white, 830, 330)
+        display_text('Score:', white, 830, 20,25)
+        display_text(str(score), white, 950,20,25)
+        display_text('Highscore:', white, 830, 50,25)
+        display_text(highscore, white, 950, 50,25)
+        display_text('P to pause', white, 830, 300,25)
+        display_text('Q to exit', white, 830, 330,25)
 
         food.draw()
         head.draw()
